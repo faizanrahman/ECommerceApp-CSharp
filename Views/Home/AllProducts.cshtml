@@ -1,0 +1,29 @@
+<div class="row justify-content-center between align-items-center">
+<partial name="_NavPartial" />
+</div>
+
+
+
+<h1>All Products Page</h1>
+
+<partial name="_ProductForm" />  
+
+
+@foreach(var product in @ViewBag.allproducts)
+{ <div>  
+    @product.ProductName
+    $ @product.Price
+    <a href="addtocart/@product.ProductId">Add To Cart</a>
+  </div>
+}
+
+
+
+
+
+
+
+
+
+
+
