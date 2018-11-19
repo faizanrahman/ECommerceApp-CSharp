@@ -1,0 +1,35 @@
+@model ECommerceApp.Models.Product
+
+
+
+
+
+
+<form asp-action="CreateProduct" asp-controller="Home" method="POST">
+    <div class="form-group">
+    <span asp-validation-for="ProductName"></span>
+    <label asp-for="ProductName">Name</label>
+    <input asp-for="ProductName"><br>
+    </div>
+
+    <div class="form-group">
+    <span asp-validation-for="ProductDescription"></span>
+    <label asp-for="ProductDescription">Description</label>
+    <textarea asp-for="ProductDescription"></textarea><br>
+    </div>
+
+    <div class="form-group">
+    <span asp-validation-for="InitialQuantity"></span>
+    <label asp-for="InitialQuantity">Quantity</label>
+    <input asp-for="InitialQuantity"><br>
+    </div>
+    
+    <div class="form-group">
+    <span asp-validation-for="Price"></span>
+    <label asp-for="Price">Price</label>
+    <input asp-for="Price"><br>
+    </div>
+
+    <input type="submit" value="Create">
+    
+</form>
