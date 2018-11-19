@@ -8,9 +8,13 @@ namespace ECommerceApp.Models
     {
         [Key]
         public int ProductId {get;set;}
+        [Required]
         public string ProductName {get;set;}
+        [Required]
         public string ProductDescription {get;set;}
+        [Required]
         public int InitialQuantity {get;set;}
+        [Required]
         public float Price {get;set;}
         public DateTime CreatedAt {get;set;}
         public DateTime UpdatedAt {get;set;}
