@@ -1,3 +1,25 @@
+<style>
+  .ProductPage{
+    display: inline-block;
+  }
+  .ProductForm{
+    float: left;
+    display: inline-block;
+    padding: 10px;
+    width: 30%;
+  }
+  h1{
+    width: 100%;
+    display: inline-block;
+    float: left;
+  }
+  .modal-content{
+    width: 130%;
+    margin: 10px;
+  }
+
+</style>
+
 <div class="row justify-content-center between align-items-center">
 <partial name="_NavPartial" />
 </div>
@@ -7,22 +29,21 @@
 <h1>All Products Page</h1>
 
 <partial name="_ProductForm" />  
+<partial name="_CheckoutPartial" />
 
 
+<div class="ProductPage">
+</div>
+
+  </div>
 @foreach(var product in @ViewBag.allproducts)
 { <div>  
-    @product.ProductName
+   @product.ProductName @product.ProductName
     $ @product.Price
     <a href="addtocart/@product.ProductId">Add To Cart</a>
+    <img src="@product.ImageUrl" alt="igUrl" height="50px" width="50px">
   </div>
 }
-
-
-
-
-
-
-
 
 
 

@@ -13,6 +13,8 @@ namespace ECommerceApp.ViewModels
         [Required]
         public int InitialQuantity {get;set;}
         [Required]
-        public float Price {get;set;}        
+        public float Price {get;set;}   
+        public float ImageUrl {get;set;}   
+             
     }
 }
