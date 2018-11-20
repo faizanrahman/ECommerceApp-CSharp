@@ -1,6 +1,7 @@
 using ECommerceApp.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace ECommerceApp.Data
 {
     public class DataContext : DbContext
@@ -10,5 +11,7 @@ namespace ECommerceApp.Data
         public DbSet<Product> Products {get;set;}
         public DbSet<Order> Orders {get;set;}
         public DbSet<OrderDetail> OrderDetails {get;set;}
+        public DbSet<Item> Items {get;set;}
+
     }
 }
