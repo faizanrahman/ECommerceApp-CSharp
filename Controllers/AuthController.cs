@@ -90,6 +90,7 @@ namespace ECommerceApp.Controllers
         [HttpGet ("logout")]
         public IActionResult Logout () {
             HttpContext.Session.SetString ("loggedin", "false");
+            HttpContext.Session.Clear();
             return RedirectToAction ("Index");
         }
     }

@@ -3,14 +3,16 @@ using System;
 using ECommerceApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ECommerceApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20181119233206_Added Item Model")]
+    partial class AddedItemModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,13 +28,9 @@ namespace ECommerceApp.Migrations
 
                     b.Property<int>("Quantity");
 
-                    b.Property<int>("UserID");
-
                     b.HasKey("ItemId");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("UserID");
 
                     b.ToTable("Items");
                 });
@@ -82,8 +80,6 @@ namespace ECommerceApp.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<string>("ImageUrl");
-
                     b.Property<int>("InitialQuantity");
 
                     b.Property<int?>("OrderId");
@@ -132,11 +128,6 @@ namespace ECommerceApp.Migrations
                     b.HasOne("ECommerceApp.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
-
-                    b.HasOne("ECommerceApp.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ECommerceApp.Models.Order", b =>

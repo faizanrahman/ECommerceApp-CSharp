@@ -14,6 +14,7 @@ namespace ECommerceApp.Models
         public string Password { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public List<Item> ItemsinCart {get;set;}
         
         
     }
