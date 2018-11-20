@@ -3,39 +3,21 @@ using System;
 using ECommerceApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ECommerceApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20181119163845_UpdateonProduct")]
+    partial class UpdateonProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            modelBuilder.Entity("ECommerceApp.Models.Item", b =>
-                {
-                    b.Property<int>("ItemId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("ProductId");
-
-                    b.Property<int>("Quantity");
-
-                    b.Property<int>("UserID");
-
-                    b.HasKey("ItemId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("Items");
-                });
 
             modelBuilder.Entity("ECommerceApp.Models.Order", b =>
                 {
@@ -82,8 +64,6 @@ namespace ECommerceApp.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<string>("ImageUrl");
-
                     b.Property<int>("InitialQuantity");
 
                     b.Property<int?>("OrderId");
@@ -125,18 +105,6 @@ namespace ECommerceApp.Migrations
                     b.HasKey("UserID");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("ECommerceApp.Models.Item", b =>
-                {
-                    b.HasOne("ECommerceApp.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
-
-                    b.HasOne("ECommerceApp.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ECommerceApp.Models.Order", b =>

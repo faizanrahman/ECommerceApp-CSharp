@@ -5,7 +5,7 @@
 
 
 
-<form asp-action="CreateProduct" asp-controller="Home" method="POST">
+<form class="ProductForm" asp-action="CreateProduct" asp-controller="Home" method="POST">
     <div class="form-group">
     <span asp-validation-for="ProductName"></span>
     <label asp-for="ProductName">Name</label>
@@ -28,6 +28,12 @@
     <span asp-validation-for="Price"></span>
     <label asp-for="Price">Price</label>
     <input asp-for="Price"><br>
+    </div>
+
+    <div class="form-group">
+    <span asp-validation-for=ImageUrl></span>
+    <label asp-for="ImageUrl">ImageUrl</label>
+    <input asp-for="ImageUrl"><br>
     </div>
 
     <input type="submit" value="Create">

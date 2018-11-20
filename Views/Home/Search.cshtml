@@ -1,0 +1,12 @@
+<div>
+<partial name="_NavPartial" />
+<partial name="_CheckoutPartial" />
+</div>
+<h2>Search Result</h2>
+  @foreach(var item in @ViewBag.searchproduct){
+  <div>
+      <h3>@item.ProductName</h3>
+      <h3>@item.ProductDescription</h3>
+
+  </div>
+  }

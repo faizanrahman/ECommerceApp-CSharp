@@ -8,10 +8,11 @@ namespace ECommerceApp.Models
     {
         [Key]
         public int ProductId {get;set;}
-        [Required]
+        [Required] 
         public string ProductName {get;set;}
         [Required]
         public string ProductDescription {get;set;}
+        public string ImageUrl {get;set;}
         [Required]
         public int InitialQuantity {get;set;}
         [Required]
