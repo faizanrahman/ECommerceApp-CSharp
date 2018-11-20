@@ -1,0 +1,14 @@
+
+<h1>Payment Pag3</h1>
+
+<form asp-action="Charge" asp-controller="Cart" method="POST">
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="pk_test_901ctDeDXHyuhU43H0iDkPm5"
+    data-amount="1999"
+    data-name="Demo Site"
+    data-description="Widget"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto">
+  </script>
+</form>

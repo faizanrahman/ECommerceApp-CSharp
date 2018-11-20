@@ -119,5 +119,17 @@ namespace ECommerceApp.Controllers
             return -1;
         }
 
+        [HttpGet("payments")]
+        public IActionResult PaymentPage()
+        {
+            return View();
+        }
+
+        [HttpPost("payments")]
+        public IActionResult Charge()
+        {
+            return RedirectToAction("Index");
+        }
+
     }   
 }
