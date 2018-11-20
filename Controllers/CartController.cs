@@ -56,41 +56,41 @@ namespace ECommerceApp.Controllers
             int? userId = HttpContext.Session.GetInt32("ID");
            
             // ProductModel productModel = new ProductModel();
-            if (SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart") == null)
-            {
-                Item cart = new Item();
-                // cart.Add(new Item { Product = productModel.find(id), Quantity = 1 });
-                cart.Product = _context.Products.SingleOrDefault(p=>p.ProductId == id);
-                cart.Quantity = 1;
-                cart.User = _context.Users.SingleOrDefault(u=>u.UserID == userId);
-                cart.UserID = (int)userId;
-                _context.Add(cart);
-                _context.SaveChanges();
+            // if (SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart") == null)
+            // {
+                // find current cart
+                    Item checkItem = _context.Items
+                    // .Where(i=>i.UserID == userId)
+                    .Include(i=>i.Product)
+                    .Include(p=>p.User)
+                    .SingleOrDefault(u=>u.UserID == userId && u.ProductId == id);
+                    if(checkItem != null && checkItem.ProductId == id)
+                    {
+                    // if true - update quantity
+                        checkItem.Quantity += 1;
+                        _context.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                // check to see if product id already exists in cart
+                    // if false create new new item
+                    else
+                    {
+                        Item cart = new Item();
+                        // cart.Add(new Item { Product = productModel.find(id), Quantity = 1 });
+                        cart.ProductId = id;
+                        cart.Product = _context.Products.SingleOrDefault(p=>p.ProductId == id);
+                        cart.Quantity = 1;
+                        cart.User = _context.Users.SingleOrDefault(u=>u.UserID == userId);
+                        cart.UserID = (int)userId;
 
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-            }
-            else
-            {
-                List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
-                int index = isExist(id);
-                if (index != -1)
-                {
-                    cart[index].Quantity++;
-                }
-                else
-                {
-                    // cart.Add(new Item { Product = productModel.find(id), Quantity = 1 });
-                    cart.Add(new Item 
-                    { 
-                        Product = _context.Products.SingleOrDefault(p=>p.ProductId == id),
-                        Quantity = 1,
-                        UserID = (int)userId,
-                        User = _context.Users.SingleOrDefault(u=>u.UserID == userId),
-                    });
-                }
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-            }
-            return RedirectToAction("Index");
+                        _context.Add(cart);
+                        _context.SaveChanges();
+
+                    
+
+                        return RedirectToAction("Index");
+                    }
+          
         }
 
         [Route("remove/{id}")]
