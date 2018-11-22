@@ -15,7 +15,9 @@ namespace ECommerceApp.Models
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public List<Item> ItemsinCart {get;set;}
-        
-        
+        public User()
+        {
+            ItemsinCart = new List<Item>();
+        }
     }
 }

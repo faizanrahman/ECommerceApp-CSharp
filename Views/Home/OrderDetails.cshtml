@@ -1,0 +1,40 @@
+<style>
+    table td,th {
+        width:200px;
+        text-align:center;
+        border:2px solid black;
+    }
+</style>
+
+
+    <h5>Order Detail for Order No.@ViewBag.OrderId</h5>
+
+
+<table>
+
+    <thead>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>SubTotal</th>
+    </thead>
+
+    <tbody>
+
+@foreach(var item in @ViewBag.orderdetail)
+{
+    
+    <tr>
+        <td>@item.ProductName</td>
+        <td>@item.Quantity</td>
+        <td>$@item.Price</td>
+        <td>$@item.SubTotal.ToString("N2")</td>
+    </tr>
+}
+    <tr>
+        <td align="right" colspan="3"><strong>Total</strong></td>
+        <td><strong>$@ViewBag.total.ToString("N2")</strong></td>
+    </tr>
+
+    </tbody>
+</table>

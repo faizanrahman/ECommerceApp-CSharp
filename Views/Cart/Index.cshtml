@@ -28,15 +28,15 @@
                 <td><a asp-controller="cart" asp-action="remove" asp-route-id="@item.ItemId">Remove</a></td>
                 <td>@item.Product.ProductId</td>
                 <td>@item.Product.ProductName</td>
-                <td>@item.Product.Price</td>
+                <td>$@item.Product.Price</td>
                 <td>@item.Quantity</td>
-                <td>@(item.Product.Price * item.Quantity)</td>
+                <td>$@(item.Product.Price * item.Quantity)</td>
             </tr>
         }
         <tr>
             <td align="right" colspan="5">Sum</td>
             <td>
-                @ViewBag.total
+                $@ViewBag.total
             </td>
         </tr>
     </table>

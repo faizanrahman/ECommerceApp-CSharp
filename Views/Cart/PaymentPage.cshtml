@@ -1,11 +1,91 @@
+<style>
 
-<h1>Payment Pag3</h1>
+table td, th {
+    width:20%;
+    text-align:center;
+    border:2px solid black;
+}
+
+table tr:hover {
+    background-color:#ddd;
+}
+
+table{
+    margin:auto;
+}
+
+label {
+  margin-left:800px;
+}
+
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+@model ECommerceApp.Models.StripeSettings
+@using Microsoft.Extensions.Options
+@inject IOptions<StripeSettings> Stripe
+
+
+<h1>Payment Page</h1>
+
+<h5>Please check the details of your order before proceeding to the payment screen.</h5>
+
+
+      <table>
+          <thead>
+            <th>ProductId</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>SubTotal</th>
+          </thead>
+
+          <tbody>
+            
+            @foreach(var item in @ViewBag.allitems)
+            {
+              <tr>
+                <td>@item.ProductId</td>
+                <td>@item.Product.ProductName</td>
+                <td>$@item.Product.Price</td>
+                <td>@item.Quantity</td>
+                <td>$@(item.Product.Price * item.Quantity)</td>
+              </tr> 
+            }
+
+
+          </tbody>
+
+      </table>
+
+
+
+
+
+
+
+
 
 <form asp-action="Charge" asp-controller="Cart" method="POST">
+  <article>
+    <label><strong>Total: $@ViewBag.amount</strong></label>
+  </article>
+  
+  
   <script
-    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
     data-key="pk_test_901ctDeDXHyuhU43H0iDkPm5"
-    data-amount="1999"
+    data-amount=@ViewBag.amount
     data-name="Demo Site"
     data-description="Widget"
     data-image="https://stripe.com/img/documentation/checkout/marketplace.png"

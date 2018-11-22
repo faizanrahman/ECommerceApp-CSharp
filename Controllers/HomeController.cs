@@ -100,11 +100,32 @@ namespace ECommerceApp.Controllers
         {
             if(HttpContext.Session.GetString("loggedin") == "true")
             {
-                var allthings = _context.Orders.Include(o=>o.Creator).ToList();
-                ViewBag.allthings = allthings;
+                var allorders = _context.Orders
+                .Include(o=>o.Creator)
+                .Where(u=> u.UserID == HttpContext.Session.GetInt32("ID"))
+                .OrderByDescending(x=>x.OrderDate)
+                .ToList();
+                ViewBag.allorders = allorders;
                 return View();
             }
             return RedirectToAction("Index", "Auth");
+        }
+
+        [HttpGet("orderdetails/{OrderId}")]
+        public IActionResult OrderDetails(int OrderId)
+        {
+            var orderdetail = _context.OrderDetails
+            .Include(o=> o.productOrdered)
+            .Include(p=>p.order)
+            .Where(x=>x.OrderId == OrderId)
+            .ToList();
+
+            float total = orderdetail.Sum(s=>s.SubTotal);
+            
+            ViewBag.total = total;
+            ViewBag.orderdetail = orderdetail;
+            ViewBag.OrderId = OrderId;
+            return View("OrderDetails");
         }
 
 

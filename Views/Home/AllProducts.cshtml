@@ -28,14 +28,19 @@
 
 <h1>All Products Page</h1>
 
-<partial name="_ProductForm" />  
-<partial name="_CheckoutPartial" />
 
+<div>
+  <partial name="_ProductForm" />  
+  <partial name="_CheckoutPartial" />
+</div>
 
 <div class="ProductPage">
 </div>
 
-
+@if(TempData["QtyError"] != null)
+{
+    <h3>@TempData["QtyError"]</h3>
+}
 @foreach(var product in @ViewBag.allproducts)
 { <div>  
    @product.ProductName @product.ProductName

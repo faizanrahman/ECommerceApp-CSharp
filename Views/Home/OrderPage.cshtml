@@ -1,26 +1,65 @@
+<style>
+
+#order-table td, th {
+    width:20%;
+    text-align:center;
+    border:2px solid black;
+}
+
+#order-table tr:hover {
+    background-color:#ddd;
+}
+
+#order-table{
+    margin:auto;
+}
+
+
+
+
+</style>
+
+
+
+
+
+
+
 <div class="row justify-content-center between align-items-center">
 <partial name="_NavPartial" />
 </div>
 
+<h1>Order History Page</h1>
 
-<h1>Add a New Order</h1>
+<h5>Please click on the Order Total to view details about the order.</h5>
 
-@model ECommerceApp.Models.Order
+<table id="order-table">
+    <thead>
+        <th>
+            OrderId
+        </th>
+        <th>
+            OrderDate
+        </th>
+        <th>
+            OrderTotal
+        </th>
+    <thead>
+    
+    <tbody>
+        
 
-<form>
+@foreach(var order in @ViewBag.allorders)
+{
+    <tr>   
+        <td>@order.OrderId</td>
+        <td>@order.OrderDate</td>
+        <td><a href="/orderdetails/@order.OrderId">$ @order.OrderTotal.ToString("N2")</a></td>    
+    </tr>
+}
+    </tbody>
 
-
-    <label asp-for="OrderQuantity">Customer</label>
-    <select asp-for="UserID">
-        <option></option>
-    </select><br>
-
-    <select>
-        <option></option>
-    </select><br>
-
-    <input type="submit" value="Add to Order"
-
+</table>
 
 
 
@@ -31,4 +70,3 @@
 
 
 
-</form>
