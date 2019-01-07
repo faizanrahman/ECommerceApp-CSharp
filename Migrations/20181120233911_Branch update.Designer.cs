@@ -3,14 +3,16 @@ using System;
 using ECommerceApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ECommerceApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20181120233911_Branch update")]
+    partial class Branchupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +46,7 @@ namespace ECommerceApp.Migrations
 
                     b.Property<DateTime>("OrderDate");
 
-                    b.Property<float>("OrderTotal");
+                    b.Property<int>("OrderQuantity");
 
                     b.Property<DateTime>("UpdatedAt");
 
@@ -64,15 +66,7 @@ namespace ECommerceApp.Migrations
 
                     b.Property<int>("OrderId");
 
-                    b.Property<float>("Price");
-
                     b.Property<int>("ProductId");
-
-                    b.Property<string>("ProductName");
-
-                    b.Property<int>("Quantity");
-
-                    b.Property<float>("SubTotal");
 
                     b.HasKey("OrderDetailId");
 

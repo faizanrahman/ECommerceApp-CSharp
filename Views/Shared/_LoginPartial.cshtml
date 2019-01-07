@@ -1,4 +1,20 @@
 @model ECommerceApp.ViewModels.LoginViewModel
+<style>
+#logform{
+    background-color: transparent;
+}
+form{
+    height: 380px;
+}
+input{
+    width: 250px;
+}
+.btn btn-success btn-block{
+    width: 50%;
+}
+</style>
+
+
 
 <div id="logform" class="col-4">
     <h2>Login</h2><br>
@@ -11,9 +27,9 @@
 
     <label asp-for="LoginPassword">Password</label><br>
     <span asp-validation-for="LoginPassword"></span>
-    <input asp-for="LoginPassword" type="password"><br>
+    <input asp-for="LoginPassword" type="password"><br><br>
 
-    <input type="submit" value="submit">
+    <input class="btn btn-success" type="submit" value="Submit">
 
 </form>
 

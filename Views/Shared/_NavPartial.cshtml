@@ -20,7 +20,7 @@
         width:100%;
     }
     #logout{
-        margin-left: 40%;
+        margin-left: 20%;
     }
 </style>
 
@@ -32,24 +32,24 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a class="navbar-brand" href="/dashboard">NameofProject</a>
+    <h2>Tech Bazaar</h2>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
-        <a class="nav-link" href="/allproducts">Products <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/allproducts">Dashboard <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" href="/orders">Order <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#">Customers <span class="sr-only">(current)</span></a>
+        <a class="nav-link disabled" href="#">Customers <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item active">
+      <!-- <li class="nav-item active">
      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Shopping Cart
-      </li>
+      </li> -->
      
  
       <li id="logout" class="nav-item">
-        <a class="nav-link disabled" href="/logout">Logout</a>
+        <a class="btn btn-danger" href="/logout">Logout</a>
       </li>
     </ul>
     <form action="/search" method="GET" class="form-inline my-2 my-lg-0">
@@ -57,7 +57,7 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
-  <a href="/cart"><img src="images/shopping-cart.png"></a>
+  <a href="/cart"><img src="https://i.imgur.com/0EdfFJE.png"></a>
 </nav>
 </div>
 
