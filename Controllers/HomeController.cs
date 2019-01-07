@@ -13,11 +13,12 @@ namespace ECommerceApp.Controllers
     public class HomeController : Controller
     {
         private readonly DataContext _context;
+        private readonly IRepository _repo;
 
-        public HomeController(DataContext context)
+        public HomeController(DataContext context, IRepository repo)
         {
             this._context = context;
-         
+            this._repo = repo;
         }
 
 
@@ -55,16 +56,44 @@ namespace ECommerceApp.Controllers
         {
             if(HttpContext.Session.GetString("loggedin") == "true")
             {
-                var allproducts = _context.Products.ToList();
-                ViewBag.allproducts = allproducts;
+                int? userId = HttpContext.Session.GetInt32("ID");
+                String userName = HttpContext.Session.GetString("Name");
+                // var allproducts = _context.Products.ToList();
+                var allproducts = _repo.AllProducts();
+                
                 float sum=0;
+                
                 foreach(var i in allproducts){
                     sum+=i.Price;
+                    System.Console.WriteLine(i.Price);
                 }
+
+                ViewBag.userName = userName;
+                ViewBag.userId = userId;
+                ViewBag.allproducts = allproducts;
                 ViewBag.sum = sum;
+
                 return View();
+
+                // Get most ordered products
+                
             }
             return RedirectToAction("Index", "Auth");
+        }
+
+        [HttpGet("addproduct")]
+        public IActionResult ProductForm()
+        {
+            return View();
+        }
+
+        [HttpGet("product/{ProductId}")]
+        public IActionResult ProductInfo(int ProductId)
+        {   
+            // var currentproduct = _context.Products.SingleOrDefault(p=>p.ProductId == ProductId);
+            var currentproduct = _repo.GetProductById(ProductId);
+            ViewBag.currentproduct = currentproduct;
+            return View();
         }
 
 
@@ -114,11 +143,13 @@ namespace ECommerceApp.Controllers
         [HttpGet("orderdetails/{OrderId}")]
         public IActionResult OrderDetails(int OrderId)
         {
-            var orderdetail = _context.OrderDetails
-            .Include(o=> o.productOrdered)
-            .Include(p=>p.order)
-            .Where(x=>x.OrderId == OrderId)
-            .ToList();
+            // var orderdetail = _context.OrderDetails
+            // .Include(o=> o.productOrdered)
+            // .Include(p=>p.order)
+            // .Where(x=>x.OrderId == OrderId)
+            // .ToList();
+
+            var orderdetail = _repo.OrderDetailsByOrderId(OrderId);
 
             float total = orderdetail.Sum(s=>s.SubTotal);
             
@@ -162,7 +193,8 @@ namespace ECommerceApp.Controllers
             if(HttpContext.Session.GetString("loggedin") == "true")
             {
                 // System.Console.WriteLine("###############################");
-                var allproducts = _context.Products.ToList();
+                // var allproducts = _context.Products.ToList();
+                var allproducts = _repo.AllProducts();
                 ViewBag.allproducts = allproducts;
                 float sum=0;
                 foreach(var i in allproducts){

@@ -10,6 +10,8 @@ using ECommerceApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Stripe;
+using System.Net.Mail;
+using System.Net;
 
 namespace ECommerceApp.Controllers
 {
@@ -140,7 +142,12 @@ namespace ECommerceApp.Controllers
            .Include(p=> p.Product)
            .ToList();
             ViewBag.allitems = allitems;
-            ViewBag.amount = HttpContext.Session.GetInt32("total")/100;
+            ViewBag.amount = HttpContext.Session.GetInt32("total");
+
+            int? userId = HttpContext.Session.GetInt32("ID");
+            var cart = _context.Items.Include(p=> p.Product).Include(u=> u.User)
+            .Where(u=>u.UserID == userId).ToList();
+            ViewBag.total = (float)cart.Sum(item => item.Product.Price * item.Quantity);
             return View();
         }
 
@@ -173,7 +180,8 @@ namespace ECommerceApp.Controllers
                 CustomerId = customer.Id
             });
 
-            TempData["ChargeAmount"] = (charge.Amount/100).ToString("N2");
+            //TempData["ChargeAmount"] = (charge.Amount/100).ToString("N2");
+            TempData["ChargeAmount"] = (charge.Amount/100);
 
             // System.Console.WriteLine("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
             // System.Console.WriteLine(charge.Currency);
@@ -238,8 +246,33 @@ namespace ECommerceApp.Controllers
                 _context.SaveChanges();
             }
         
+            // The code below is for sending email to the customer who checked out successfully.
+            var senderEmail = new MailAddress("demoemail536@gmail.com", "Tech Bazaar");
+            var receiverEmail = new MailAddress(stripeEmail, HttpContext.Session.GetString("username"));
 
+            var password = "test1234%";
+            var subject = "Order Confirmation";
+            var body = "Thanks for ordering with us. Your products should arrive soon. We hope you give us a chance to serve you again.";
 
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(senderEmail.Address, password),
+            };
+
+            using(var mess = new MailMessage(senderEmail, receiverEmail)
+                {
+                    Subject = subject,
+                    Body = body,   
+                }
+                )
+                {
+                    smtp.Send(mess);
+                }
 
 
             return RedirectToAction("Success");

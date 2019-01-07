@@ -3,7 +3,7 @@
 table td, th {
     width:20%;
     text-align:center;
-    border:2px solid black;
+   
 }
 
 table tr:hover {
@@ -18,15 +18,15 @@ label {
   margin-left:800px;
 }
 
+.total {
+            font-weight:bold;
+            text-decoration:underline;
+            font-size:16px;
+        }
+
 
 
 </style>
-
-
-
-
-
-
 
 
 
@@ -35,51 +35,58 @@ label {
 @using Microsoft.Extensions.Options
 @inject IOptions<StripeSettings> Stripe
 
+<div class="row justify-content-center between align-items-center">
+<partial name="_NavPartial" />
+</div>
+
+
 
 <h1>Payment Page</h1>
 
 <h5>Please check the details of your order before proceeding to the payment screen.</h5>
 
 
-      <table>
-          <thead>
-            <th>ProductId</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>SubTotal</th>
-          </thead>
+      
+              <table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">ProductId</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Sub Total</th>
+    </tr>
+  </thead>
 
-          <tbody>
-            
-            @foreach(var item in @ViewBag.allitems)
-            {
-              <tr>
-                <td>@item.ProductId</td>
-                <td>@item.Product.ProductName</td>
-                <td>$@item.Product.Price</td>
-                <td>@item.Quantity</td>
-                <td>$@(item.Product.Price * item.Quantity)</td>
-              </tr> 
-            }
-
-
-          </tbody>
+   <tbody>
+       @foreach (var item in ViewBag.allitems)
+        {
+    <tr>
+      
+      <td>@item.Product.ProductId</td>
+      <td>@item.Product.ProductName</td>
+        <td>$@item.Product.Price</td>
+        <td>@item.Quantity</td>
+        <td class="table-success">$@(item.Product.Price * item.Quantity)</td>
+    </tr>
+    }
+    <tr class="table-success">
+            <td align="right" colspan="4">Total</td>
+            <td class="total">
+                $@ViewBag.total
+            </td>
+    </tr>
+     
+  </tbody>
 
       </table>
 
 
 
-
-
-
-
-
-
 <form asp-action="Charge" asp-controller="Cart" method="POST">
-  <article>
-    <label><strong>Total: $@ViewBag.amount</strong></label>
-  </article>
+  <!-- <article>
+    <label><strong>Total: $@ViewBag.total</strong></label>
+  </article> -->
   
   
   <script

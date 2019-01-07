@@ -33,6 +33,7 @@ namespace ECommerceApp
             services.AddMvc();
             services.AddSession();
             services.AddDbContext<DataContext>(options => options.UseMySql(Configuration["DBInfo:ConnectionString"]));
+            services.AddScoped<IRepository, Repository>();
             
         }
 
