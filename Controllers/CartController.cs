@@ -181,7 +181,7 @@ namespace ECommerceApp.Controllers
             });
 
             //TempData["ChargeAmount"] = (charge.Amount/100).ToString("N2");
-            TempData["ChargeAmount"] = (charge.Amount/100);
+            TempData["ChargeAmount"] = (charge.Amount/(double)100).ToString("N2");
 
             // System.Console.WriteLine("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
             // System.Console.WriteLine(charge.Currency);
@@ -203,13 +203,12 @@ namespace ECommerceApp.Controllers
                     
                System.Console.WriteLine("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
            }
-
            ECommerceApp.Models.Order newOrder = new ECommerceApp.Models.Order
            {
                OrderDate = DateTime.Now,
                UpdatedAt = DateTime.Now,
                UserID = (int)HttpContext.Session.GetInt32("ID"),
-               OrderTotal = charge.Amount/100, 
+               OrderTotal = charge.Amount/ (float) 100, 
            };
 
            _context.Add(newOrder);

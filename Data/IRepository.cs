@@ -11,5 +11,7 @@ namespace ECommerceApp.Data
         Product GetProductById(int id);
 
         IEnumerable<OrderDetail> OrderDetailsByOrderId(int id);
+
+        IEnumerable<Order> OrdersByUser(int userId);
     }
 }

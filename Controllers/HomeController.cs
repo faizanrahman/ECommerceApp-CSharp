@@ -127,13 +127,17 @@ namespace ECommerceApp.Controllers
         [HttpGet("orders")]
         public IActionResult OrderPage()
         {
+
             if(HttpContext.Session.GetString("loggedin") == "true")
             {
-                var allorders = _context.Orders
-                .Include(o=>o.Creator)
-                .Where(u=> u.UserID == HttpContext.Session.GetInt32("ID"))
-                .OrderByDescending(x=>x.OrderDate)
-                .ToList();
+                // var allorders = _context.Orders
+                // .Include(o=>o.Creator)
+                // .Where(u=> u.UserID == HttpContext.Session.GetInt32("ID"))
+                // .OrderByDescending(x=>x.OrderDate)
+                // .ToList();
+                System.Console.WriteLine("#$$$$$$$$$$$$$$$$$$$$$$$$$");
+                // System.Console.WriteLine();
+                var allorders = _repo.OrdersByUser( (int) HttpContext.Session.GetInt32("ID"));
                 ViewBag.allorders = allorders;
                 return View();
             }
