@@ -93,7 +93,6 @@ namespace ECommerceApp.Controllers {
             HttpContext.Session.SetInt32 ("ID", userid);
             HttpContext.Session.SetString ("Name", username);
             HttpContext.Session.SetString ("loggedin", "true");
-
             return RedirectToAction ("AllProducts", "Home");
         }
 

@@ -39,6 +39,16 @@ namespace ECommerceApp.Data
             return orderdetail;
         }
 
+        public IEnumerable<Order> OrdersByUser(int userId)
+        {
+            var allorders = _context.Orders
+                .Include(o=>o.Creator)
+                .Where(u=> u.UserID == userId) 
+                .OrderByDescending(x=>x.OrderDate)
+                .ToList();
+
+            return allorders;
+        }
         
     }
 }
