@@ -8,9 +8,9 @@ namespace ECommerceApp.Models
     {
         public int OrderId {get;set;}
         [Required]
-        public int OrderQuantity {get;set;}
         public DateTime OrderDate {get;set;}
         public DateTime UpdatedAt {get;set;}
+        public float OrderTotal {get;set;}
         public int UserID {get;set;}
         public User Creator {get;set;}
         public List<Product> ProductsInOrder{get;set;}
