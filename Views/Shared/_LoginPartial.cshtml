@@ -22,11 +22,11 @@ input{
 <form asp-action="Login" asp-controller="Auth" method="POST">
 
     <label asp-for="LoginEmail">Email</label><br>
-    <span asp-validation-for="LoginEmail"></span>
+    <span style="color:red;" asp-validation-for="LoginEmail"></span>
     <input asp-for="LoginEmail" type="email"><br>
 
     <label asp-for="LoginPassword">Password</label><br>
-    <span asp-validation-for="LoginPassword"></span>
+    <span style="color:red;" asp-validation-for="LoginPassword"></span>
     <input asp-for="LoginPassword" type="password"><br><br>
 
     <input class="btn btn-success" type="submit" value="Submit">

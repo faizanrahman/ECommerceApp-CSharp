@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,20 @@ namespace ECommerceApp.Data
             return product;
         }
 
+        public void CreateProduct(Product product)
+        {
+            Product newProduct = new Product
+            {
+                ProductName = product.ProductName,
+                ProductDescription = product.ProductDescription,
+                InitialQuantity = product.InitialQuantity,
+                Price = product.Price,
+                ImageUrl=product.ImageUrl,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+            };
+        }
+
         public IEnumerable<OrderDetail> OrderDetailsByOrderId(int OrderId)
         {
             var orderdetail = _context.OrderDetails
@@ -48,6 +63,61 @@ namespace ECommerceApp.Data
                 .ToList();
 
             return allorders;
+        }
+
+
+        // Cart Controller Methods
+        public IEnumerable<Item> GetCartItemsByUser(int userId)
+        {
+            var cart = _context.Items.Include(p => p.Product).Include(u => u.User)
+                .Where(u => u.UserID == userId).ToList();
+            
+            return cart;
+        }
+
+        public Item CheckItemInCart(int userId, int productId)
+        {
+            Item checkItem = _context.Items
+                    .Include (i => i.Product)
+                    .Include (p => p.User)
+                    .SingleOrDefault (u => u.UserID == userId && u.ProductId == productId);
+            
+            return checkItem;
+        }
+
+        public Item removedItem(int itemId)
+        {
+            Item removedItem = _context.Items.SingleOrDefault (i => i.ItemId == itemId);
+
+            return removedItem;
+        }
+
+        public Order CreateOrder(int userId, float orderTotal)
+        {
+            Order newOrder = new Order
+            {
+                OrderDate = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                UserID = userId,
+                OrderTotal = orderTotal,
+            };
+
+            return newOrder;
+        }
+
+        public OrderDetail CreateOrderDetail(int orderId, int productId, float price, int quantity, string productName, float subTotal)
+        {
+            OrderDetail orderDetail = new OrderDetail
+            {
+                OrderId = orderId,
+                ProductId = productId,
+                Price = price,
+                Quantity = quantity,
+                ProductName = productName,
+                SubTotal = subTotal,
+            };
+
+            return orderDetail;
         }
         
     }

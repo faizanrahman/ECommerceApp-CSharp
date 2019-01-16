@@ -10,14 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace ECommerceApp.Controllers {
     public class AuthController : Controller {
         private readonly DataContext _context;
-        // private readonly IAuthRepository _repo;
 
-        public AuthController (
-            DataContext context
-            // IAuthRepository repo
-        ) {
+        public AuthController (DataContext context) 
+        {
             this._context = context;
-            // _repo = repo;
         }
 
         [HttpGet ("")]
@@ -25,23 +21,13 @@ namespace ECommerceApp.Controllers {
             return View ();
         }
 
-        // [HttpPost ("registertest")]
-        // public IActionResult Rtest (RegistrationViewModel reg) {
-        //     if (!ModelState.IsValid) {
-        //         return View ("Index");
-        //     }
-        //     var registration = _repo.Register(reg);
-        //     if (registration is null) {
-        //         return RedirectToAction("Index");
-        //     }
-        //     return View("Index");
-        // }
 
         [HttpPost ("register")]
         public IActionResult Create (RegistrationViewModel reg) {
             if (!ModelState.IsValid) {
                 return View ("Index");
             }
+            // Checking to see if user already exists. If yes, throw error, otherwise create user.
             User userInDB = _context.Users.FirstOrDefault (u => u.Email == reg.Email);
             if (userInDB != null) {
                 ModelState.AddModelError ("Email", "User already exists");
@@ -58,6 +44,7 @@ namespace ECommerceApp.Controllers {
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
             };
+
             _context.Users.Add (newUser);
             _context.SaveChanges ();
 
@@ -84,15 +71,17 @@ namespace ECommerceApp.Controllers {
             }
             User loggedIn = _context.Users.FirstOrDefault (u => u.Email == login.LoginEmail);
             System.Console.WriteLine ("#########################################");
-            // System.Console.WriteLine(loggedIn.LoginEmail);
             System.Console.WriteLine (login.LoginEmail);
+
             var username = loggedIn.FirstName;
+
             int userid = loggedIn.UserID;
             System.Console.WriteLine (username);
             System.Console.WriteLine (userid);
             HttpContext.Session.SetInt32 ("ID", userid);
             HttpContext.Session.SetString ("Name", username);
             HttpContext.Session.SetString ("loggedin", "true");
+
             return RedirectToAction ("AllProducts", "Home");
         }
 
@@ -100,6 +89,7 @@ namespace ECommerceApp.Controllers {
         public IActionResult Logout () {
             HttpContext.Session.SetString ("loggedin", "false");
             HttpContext.Session.Clear ();
+            
             return RedirectToAction ("Index");
         }
     }

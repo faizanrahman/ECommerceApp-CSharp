@@ -58,7 +58,7 @@ namespace ECommerceApp.Controllers
             {
                 int? userId = HttpContext.Session.GetInt32("ID");
                 String userName = HttpContext.Session.GetString("Name");
-                // var allproducts = _context.Products.ToList();
+                
                 var allproducts = _repo.AllProducts();
                 
                 float sum=0;
@@ -90,7 +90,7 @@ namespace ECommerceApp.Controllers
         [HttpGet("product/{ProductId}")]
         public IActionResult ProductInfo(int ProductId)
         {   
-            // var currentproduct = _context.Products.SingleOrDefault(p=>p.ProductId == ProductId);
+            
             var currentproduct = _repo.GetProductById(ProductId);
             ViewBag.currentproduct = currentproduct;
             return View();
@@ -103,18 +103,10 @@ namespace ECommerceApp.Controllers
         {
             if(ModelState.IsValid)
             {
-                Product newProduct = new Product
-                {
-                    ProductName = pro.ProductName,
-                    ProductDescription = pro.ProductDescription,
-                    InitialQuantity = pro.InitialQuantity,
-                    Price = pro.Price,
-                    ImageUrl=pro.ImageUrl,
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now,
-                };
 
-                _context.Add(newProduct);
+                _repo.CreateProduct(pro);
+
+                _context.Add(pro);
                 _context.SaveChanges();
                 return RedirectToAction("AllProducts");
             }
@@ -130,13 +122,9 @@ namespace ECommerceApp.Controllers
 
             if(HttpContext.Session.GetString("loggedin") == "true")
             {
-                // var allorders = _context.Orders
-                // .Include(o=>o.Creator)
-                // .Where(u=> u.UserID == HttpContext.Session.GetInt32("ID"))
-                // .OrderByDescending(x=>x.OrderDate)
-                // .ToList();
+            
                 System.Console.WriteLine("#$$$$$$$$$$$$$$$$$$$$$$$$$");
-                // System.Console.WriteLine();
+             
                 var allorders = _repo.OrdersByUser( (int) HttpContext.Session.GetInt32("ID"));
                 ViewBag.allorders = allorders;
                 return View();
@@ -147,12 +135,7 @@ namespace ECommerceApp.Controllers
         [HttpGet("orderdetails/{OrderId}")]
         public IActionResult OrderDetails(int OrderId)
         {
-            // var orderdetail = _context.OrderDetails
-            // .Include(o=> o.productOrdered)
-            // .Include(p=>p.order)
-            // .Where(x=>x.OrderId == OrderId)
-            // .ToList();
-
+           
             var orderdetail = _repo.OrderDetailsByOrderId(OrderId);
 
             float total = orderdetail.Sum(s=>s.SubTotal);
@@ -163,33 +146,6 @@ namespace ECommerceApp.Controllers
             return View("OrderDetails");
         }
 
-
-
-        // [HttpGet("SearchPage")]
-        // public IActionResult SearchPage ()
-        // {
-        //     if(HttpContext.Session.GetString("loggedin") == "true")
-        //     {
-        //         System.Console.WriteLine("###############################");
-        //         var allproducts = _context.Products.ToList();
-        //         ViewBag.allproducts = allproducts;
-        //         float sum=0;
-        //         foreach(var i in allproducts){
-        //             sum+=i.Price;
-        //         }
-        //         ViewBag.sum = sum;
-
-        //         ViewBag.searchproduct = TempData["search"];
-        //         return View("SearchPage");
-        //         List<Product> searchproduct = _context.Products.Where(u=>u.ProductName.Contains(search)).ToList();
-        //         System.Console.WriteLine("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-        //         System.Console.WriteLine(searchproduct);
-        //         System.Console.WriteLine(Request.Query["search"]);
-        //     // ViewBag.searchproduct = searchproduct;
-        //         TempData["search"] = searchproduct;
-        //     }
-        //     return RedirectToAction("Index", "Auth");
-        // }
 
         [HttpGet("search")]
         public IActionResult Search(string search)
